@@ -1,19 +1,15 @@
 import React from 'react';
 import './App.css';
+import Header from './componets/Header.jsx';
+import Navbar from './componets/Navbar.jsx';
+import Profile from './componets/Profile.jsx';
 
 const App =() => {
   return (
-    <div>
-    <header>
-      <img src='images/mavic.png'></img>
-    </header>
-    <nav>
-      <div>Profile</div>
-      <div>Message</div>
-    </nav>
-    <div>Main content</div>
-      <div></div>
-    
+    <div className='app-wrapper'>
+   <Header />
+    <Navbar/>
+   <Profile/>
     </div>
   );
 }
