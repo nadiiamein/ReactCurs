@@ -1,7 +1,8 @@
 import React from 'react';
 
 const Profile = () => {
-    return <div className='content'>
+    return (
+    <div className='content'>
 
     <div>
       <img src='https://w-dog.ru/wallpapers/10/0/431531185389227/podsolnux-solnce-leto-priroda.jpg'></img>
@@ -31,7 +32,7 @@ const Profile = () => {
 
     </div>
     </div>
-  </div>
+  </div>);
 }
 
 export default Profile;
