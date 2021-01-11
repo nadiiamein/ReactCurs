@@ -5,7 +5,7 @@ import MyPosts from './MyPosts/MyPosts.jsx';
 
 const Profile = () => {
     return (
-    <div className={s.content}>
+    <div >
 
     <div className={s.image}>
       <img src='https://w-dog.ru/wallpapers/10/0/431531185389227/podsolnux-solnce-leto-priroda.jpg'></img>
