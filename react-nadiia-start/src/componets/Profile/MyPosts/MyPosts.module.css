@@ -1,3 +1,11 @@
 .item {
     color:rgba(238, 40, 14, 0.849)
   }
+
+  .postsBlock{
+    padding: 10px;
+  }
+
+  .posts{
+    margin-top: 10px;
+  }

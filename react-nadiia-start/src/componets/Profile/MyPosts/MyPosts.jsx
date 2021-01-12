@@ -4,16 +4,19 @@ import Post from './Post/Post.jsx';
 
 const MyPosts = () => {
     return (
-        <div>Mein Posts
-
+        <div className={s.postsBlock}>
+          <h3>Mein Posts</h3>
       <div>
-        Nue Post
+        <div>
+       <textarea></textarea>
+       </div>
+       <div>
+       <button>Add post</button>
+       </div>
       </div>
 <div className={s.posts}>
      <Post message='Hallo!Wie geht es?'/>
      <Post message='Das ist mein erstePost'/>
-     
-
     </div>
     </div>
     );
