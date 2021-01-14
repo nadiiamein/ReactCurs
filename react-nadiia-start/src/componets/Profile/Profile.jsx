@@ -5,10 +5,17 @@ import ProfileInfo from './ProfileInfo/ProfileInfo.jsx';
 
 
 const Profile = () => {
+
+     let posts=[
+       {id: 1, message: 'Hallo!Wie geht es?', likesCount: 12},
+        {id: 2, message: 'Das ist mein erste Post', likesCount: 42}
+      
+    ]
+
     return (
     <div >
 <ProfileInfo/>
-    <MyPosts />
+    <MyPosts posts={} />
   </div>);
 }
 
