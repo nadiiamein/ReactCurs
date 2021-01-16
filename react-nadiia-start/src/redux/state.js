@@ -2,14 +2,18 @@
 
   let state = {
 
-    
- posts:
+    profilePage: {
+        posts:
  [
     {id: 1, message: 'Hallo!Wie geht es?', likesCount: 12},
      {id: 2, message: 'Das ist mein erste Post', likesCount: 42}
    
-  ],
-  dialogs:
+  ]
+  
+    },
+    
+    dialogsPage: {
+        dialogs:
   [
     {id: 1, name: 'Peter'},
     {id: 2, name: 'Petra'},
@@ -19,18 +23,20 @@
     {id: 6, name: 'Martin'},
   
   ],
-  messages: 
-  [
-  {id: 1, message: 'Hallo'},
-  {id: 2, message: 'Wie geht es dir?'},
-  {id: 3, message: 'Ich lerne ReactJS'},
-  {id: 4, message: 'Ich auch'},
-  {id: 5, message: 'Ich bin kaputt'},
-  {id: 6, message: 'Peter?'},
-  
-  ]
+        messages: 
+        [
+        {id: 1, message: 'Hallo'},
+        {id: 2, message: 'Wie geht es dir?'},
+        {id: 3, message: 'Ich lerne ReactJS'},
+        {id: 4, message: 'Ich auch'},
+        {id: 5, message: 'Ich bin kaputt'},
+        {id: 6, message: 'Peter?'},
+        
+        ]
+      
 
+    }
+ 
   };
 
   export default state;
-  
