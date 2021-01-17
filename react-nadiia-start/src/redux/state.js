@@ -1,4 +1,4 @@
-
+import {renderEntireTree} from '../render.js';
 
   let state = {
 
@@ -47,6 +47,7 @@
       likesCount: 0
     };
     state.profilePage.posts.push(newPost);
+    renderEntireTree(state);
   };
 
   export default state;
