@@ -1,20 +1,15 @@
 import React from 'react';
-import s from './Profile.module.css';
-import MyPosts from './MyPosts/MyPosts.jsx';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo.jsx';
 
 
 const Profile = (props) => {
-
-
     return (
-    <div >
-<ProfileInfo/>
-    <MyPosts posts={props.profilePage.posts} 
-    newPostText={props.profilePage.newPostText}
-    addPost={props.addPost}
-    updateNewpPostsText={props.updateNewpPostsText} />
-  </div>);
+    <div>
+<ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updatestatus}/>
+    <MyPostsContainer />
+  </div>
+  );
 }
 
 export default Profile;

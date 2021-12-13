@@ -1,35 +1,30 @@
 import React from 'react';
 import './App.css';
-import Header from './componets/Header/Header.jsx';
 import Navbar from './componets/Navbar/Navbar.jsx';
-import Profile from './componets/Profile/Profile.jsx';
-import Dialogs from './componets/Dialogs/Dialogs.jsx';
+import ProfileContainer from './componets/Profile/ProfileContainer.jsx';
+import DialogsContainer from './componets/Dialogs/DialogsContainer.jsx';
+import UsersContainer from './componets/Users/UsersContainer.jsx';
 import {Route} from 'react-router-dom';
-import {BrowserRouter} from 'react-router-dom';
+import HeaderContainer from './componets/Header/HeaderContainer';
+import LoginPage from "./componets/Login/Login.jsx";
 
 
-const App =(props) => {
+const App =() => {
   return (
-    <BrowserRouter>
     <div className='app-wrapper'>
-   <Header />
-    <Navbar/>
+   <HeaderContainer />
+    <Navbar />
     <div className='app-wrapper-content'>
-    <Route path='/dialogs' render={ () => <Dialogs 
-    state={props.state.dialogsPage} />} />
-    
+    <Route path='/dialogs' render={ () => <DialogsContainer /> } />
 
-    <Route  path='/profile' render={ () => <Profile 
-     profilePage={props.state.profilePage} 
-     addPost={props.addPost} 
-     updateNewpPostsText={props.updateNewpPostsText}/>} />
+    <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
+    <Route path='/users' render={ () => <UsersContainer /> } />
+
+    <Route path='/login' render={ () => <LoginPage /> } />
 
     </div>
     </div>
-    </BrowserRouter>
   );
 }
-
-
 
 export default App;
