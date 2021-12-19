@@ -1,86 +1,130 @@
-import {usersAPI} from "../api/api";
+import { profilesApi } from "../api/api";
+import { stopSubmit } from "redux-form";
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
+const ADD_POST = "ADD_POST";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
+const DELETE_POST = "DELETE_POST";
+const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
+const EDIT_PROFILE_DESCRIPTION = "EDIT_PROFILE_DESCRIPTION";
 
 let initialState = {
-  posts:
-[
-{id: 1, message: 'Hallo!Wie geht es?', likesCount: 12},
-{id: 2, message: 'Das ist mein erste Post', likesCount: 42}
-
-],
-newPostText: 'naddia programmerin',
-profile: null,
-status: ""
-
+  myPostData: [
+    { id: 1, postText: "It's my first post", likesCount: 34, dislikesCount: 5 },
+    { id: 2, postText: "Hi, how are you ?", likesCount: 3, dislikesCount: 0 },
+  ],
+  profile: null,
+  status: "",
+  isFetching: false,
+  editMode: false,
 };
 
- const profileReducer = (state = initialState, action) => {
-switch (action.type) {
-
-  case ADD_POST: {
-    let newPost = {
-      id: 5,
-      message: state.newPostText,
-      likesCount: 0
-    };
-    let stateCopy = {
-      ...state,
-      posts: [...state.posts, newPost],
-      newPostText: ''
-    };
-
-    return stateCopy;
-  }
-   
-  case UPDATE_NEW_POST_TEXT: {
-    return {
-      ...state,
-newPostText: action.newText
-    };
-  }
-  case SET_STATUS{
-    return {
-      ...state,
-      statu: action.status
-    }
-  }
-  case SET_USER_PROFILE: {
-    return {...state, profile:action.profile}
-  }
+const profileReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_POST:
+      return {
+        ...state,
+        myPostData: [
+          ...state.myPostData,
+          {
+            id: state.myPostData.length + 1,
+            postText: action.newPostText,
+            likesCount: 21,
+            dislikesCount: 2,
+          },
+        ],
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        myPostData: state.myPostData.filter((p) => p.id !== action.postId),
+      };
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        profile: action.profile,
+      };
+    case SET_STATUS:
+      return {
+        ...state,
+        status: action.status,
+      };
+    case TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+      };
+    case SAVE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        profile: { ...state.profile, photos: action.editedProfile },
+      };
+    case EDIT_PROFILE_DESCRIPTION:
+      return {
+        ...state,
+        editMode: action.editMode,
+      };
     default:
       return state;
-}
-         
+  }
 };
 
-export const addPostActionCreator = () => ({type: ADD_POST}) 
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
-export const setStatus = (status) => ({type: SET_STATUS, status})
+export const addPost = (newPostText) => ({ type: ADD_POST, newPostText });
 
-export const getUserProfile = (userId) => (dispatch) => {
-  usersAPI.getProfile(userId).then(response => {
-    dispatch(setUserProfile(response.data));
+const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
+const isToggleFetchingProfile = (isFetching) => ({
+  type: TOGGLE_IS_FETCHING,
+  isFetching,
 });
-}  
-export const getStatus = (userId) => (dispatch) => {
-  profileAPI.getStatus(userId).then(response => {
-    dispatch(setStatus(response.data));
-});
-}
+const setStatus = (status) => ({ type: SET_STATUS, status });
 
-export const updateStatus = (status) => (dispatch) => {
-  profileAPI.updateStatus(status).then(response => {
-    if(response.data.resultCode === 0) {
-    dispatch(setStatus(status));
-    }
+const saveProfileSuccess = (editedProfile) => ({
+  type: EDIT_PROFILE_DESCRIPTION,
+  editedProfile,
 });
-}
-export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT,
-  newText: text });
+
+export const deletePost = (postId) => ({ type: DELETE_POST, postId });
+
+const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
+
+export const getUserStatus = (userId) => async (dispatch) => {
+  let data = await profilesApi.getStatus(userId);
+  dispatch(setStatus(data));
+};
+
+export const getProfilePage = (userId) => async (dispatch) => {
+  dispatch(isToggleFetchingProfile(true));
+
+  let data = await profilesApi.getProfile(userId);
+  dispatch(isToggleFetchingProfile(false));
+  dispatch(setUserProfile(data));
+};
+
+export const updateUserStatus = (status) => async (dispatch) => {
+  let data = await profilesApi.updateStatus(status);
+  if (data.resultCode === 0) dispatch(setStatus(status));
+};
+
+export const savePhoto = (file) => async (dispatch) => {
+  let data = await profilesApi.savePhoto(file);
+  if (data.resultCode === 0) dispatch(savePhotoSuccess(data.data.photos));
+};
+
+export const saveProfile = (profile) => async (dispatch, getState) => {
+  const userId = getState().auth.userId;
+  let data = await profilesApi.saveProfile(profile);
+  if (data.resultCode === 0) {
+    dispatch(getProfilePage(userId));
+  } else {
+    let message =
+      data.messages.length > 0
+        ? data.messages[0]
+        : "One of the links is invalid";
+    dispatch(stopSubmit("edit-profile", { _error: message }));
+    return Promise.reject(data.messages[0]);
+  }
+};
 
 export default profileReducer;
