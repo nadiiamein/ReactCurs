@@ -1,0 +1,28 @@
+.aside {
+	grid-area: a;
+	background-color: rgb(67, 119, 82);
+}
+
+.asideNav {
+	grid-area: an;
+	padding: 20px;
+}
+
+.asideNavUl {
+	grid-area: nu;
+}
+
+.link {
+	color: white;
+	text-decoration: none;
+	list-style-type: georgian;
+}
+.link li {
+	padding: 5px;
+}
+
+.link.activeLink {
+	color: gold;
+	text-decoration: none;
+	list-style-type: georgian;
+}
