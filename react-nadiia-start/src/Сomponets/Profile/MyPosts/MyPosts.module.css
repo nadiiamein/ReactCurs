@@ -1,11 +1,8 @@
-.item {
-    color:rgba(238, 40, 14, 0.849)
-  }
+.myPostsWrap {
+	padding: 10px;
+}
 
-  .postsBlock{
-    padding: 10px;
-  }
-
-  .posts{
-    margin-top: 10px;
-  }
+.myPostsTitle {
+	display: flex;
+	justify-content: center;
+}

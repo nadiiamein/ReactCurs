@@ -1,0 +1,24 @@
+.loginWrapper {
+
+}
+.formWrapper {
+    
+}
+
+.form span {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+
+.formGlobalError {
+    border: 2px solid red;
+    padding: 5px;
+    color: red;
+}
+
+.formCheckbox {
+    display: flex;
+    align-items: center;
+}
